@@ -9,4 +9,4 @@ The game is still a work in progress. Here is a list of some things that I want 
 - Interesting map mechanics i.e. buttons that open/close hidden doors or portals, maybe other ideas
 - Fix some of the issues with running the game. For example, the executable seems to not work if you don't open it from console
 
-It is also based off of Curses so it is NOT Windows compatibility. Adding Windows compatibility will be considered later.
+It is also based off of Curses so it is NOT Windows compatible. Adding Windows compatibility will be considered later.

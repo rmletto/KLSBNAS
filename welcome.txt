@@ -1,0 +1,11 @@
+Welcome to KLSBNAS (Kinda Like Snake But Not Actually Snake)
+
+How to play:
+
+ - Use WASD to control the direction the snake travels
+ - Try not to run into the walls; you'll lose if you do!
+ - Make it to the exit on the other side of the map (marked by X's)
+
+Press ESC at any time to close the game
+
+Press ENTER to start!

@@ -45,6 +45,14 @@ public:
 	
 	
 	
+
+	
+private:
+	int snakeXpos;		//X coordinate of the Snake
+	int snakeYpos;		//Y coordinate of the Snake
+	WINDOW* snakeWin;	//Window that the snake is on
+	int lastInput = 'd';
+
 	/**
 	 * Method to update the Snake's position on the map
 	 * Switching/clearing terminals with Curses can mess with cursor position,
@@ -56,13 +64,7 @@ public:
 	 *
 	 * @returns none
 	 */
-	void updatePos();
-	
-private:
-	int snakeXpos;		//X coordinate of the Snake
-	int snakeYpos;		//Y coordinate of the Snake
-	WINDOW* snakeWin;	//Window that the snake is on
-	int lastInput = 'd';
+	void updatePos(int input, char direction);
 };
 
 /**

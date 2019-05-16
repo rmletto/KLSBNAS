@@ -16,7 +16,10 @@
  */
 Snake::Snake(int startingX, int startingY, WINDOW* gameWin)
 : snakeXpos(startingX), snakeYpos(startingY), snakeWin(gameWin)
-{}
+{
+	//Move the cursor to the start
+	wmove(snakeWin, snakeYpos, snakeXpos);
+}
 
 
 
@@ -31,58 +34,44 @@ Snake::Snake(int startingX, int startingY, WINDOW* gameWin)
  */
 void Snake::move(int moveInput)
 {
-	waddch(snakeWin, '*');	//Add a character to the snake's body
 	switch(moveInput)
 	{
 		///UP CONDITION
 		case 'w' :
-			lastInput = moveInput;
 			snakeYpos--;	//Decrement the Snake Y position, which moves it up
-			wmove(snakeWin, snakeYpos, snakeXpos);	//Update position on map
-			waddch(snakeWin, '^');	//Show Snake direction
+			updatePos(moveInput, '^');
 			break;
 		
 		///RIGHT CONDITION
 		case 'd' :
-			lastInput = moveInput;
 			snakeXpos++;	//Increment the Snake X position
-			wmove(snakeWin, snakeYpos, snakeXpos);	//Update position on map
-			waddch(snakeWin, '>');	//Show Snake direction
+			updatePos(moveInput, '>');
 			break;
 			
 		///DOWN CONDITION
 		case 's' :
-			lastInput = moveInput;
 			snakeYpos++;	//Increment the Snake Y position, which moves it down
-			wmove(snakeWin, snakeYpos, snakeXpos);	//Update position on map
-			waddch(snakeWin, 'v');	//Show Snake direction
+			updatePos(moveInput, 'v');
 			break;
 		
 		///LEFT CONDITION
 		case 'a' :
-			lastInput = moveInput;
 			snakeXpos--;	//Decrement the Snake X position
-			wmove(snakeWin, snakeYpos, snakeXpos);	//Update position on map
-			waddch(snakeWin, '<');	//Show Snake direction
+			updatePos(moveInput, '<');
 			break;
 		
 		//DEFAULT CASE: MOVE WITH RESPECT TO LAST INPUTTED DIRECTION
 		default:
 			move(lastInput);
-			return;
+			break;
 	}
-	//If the x position or y position exceeds the bounds of the map, do nothing
 
-	wmove(snakeWin, snakeYpos, snakeXpos);	//Update Snake position after printing direction
-	wrefresh(snakeWin);						//Refresh the window to show changes
 }
 
 
 
 /**
  * Method to update the Snake's position on the map
- * Switching/clearing terminals with Curses can mess with cursor position,
- * so this method is to help fix those issues
  *
  * DOES NOT UPDATE SCREEN AUTOMATICALLY
  *
@@ -90,9 +79,19 @@ void Snake::move(int moveInput)
  *
  * @returns none
  */
-void Snake::updatePos()
+void Snake::updatePos(int input, char direction)
 {
+	//Add a character to the Snake's body
+	waddch(snakeWin, '*');
+
+	lastInput = input;
+	//Update the Snake's cursor position on the map to where it's head is supposed to be
 	wmove(snakeWin, snakeYpos, snakeXpos);
+	//Add the Snake's head, pushes cursor forward
+	waddch(snakeWin, direction);
+	//Set the cursor back on top of the Snake's head
+	wmove(snakeWin, snakeYpos, snakeXpos);
+	wrefresh(snakeWin);
 }
 
 

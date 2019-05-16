@@ -63,7 +63,7 @@ int main() {
 	
 	
 	erase();			//Clear the window
-	sneko->updatePos();	//Fixes the Snake position after the window clear
+	//sneko->updatePos();	//Fixes the Snake position after the window clear
 		
 	///
 	///MOVEMENT TESTING

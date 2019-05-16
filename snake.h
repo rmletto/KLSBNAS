@@ -29,7 +29,7 @@ public:
 	 *			startingDir - Starting direction for the Snake (default Right)
 	 *			gameWin - The window that the Snake game is taking place in (default stdscr)
 	 */
-	Snake(int startingX = 1, int startingY = 1, Direction startingDir = Direction::Right, WINDOW* gameWin = stdscr);
+	Snake(int startingX = 1, int startingY = 1, WINDOW* gameWin = stdscr);
 	
 	
 	
@@ -62,7 +62,7 @@ private:
 	int snakeXpos;		//X coordinate of the Snake
 	int snakeYpos;		//Y coordinate of the Snake
 	WINDOW* snakeWin;	//Window that the snake is on
-	Direction dir;		//Direction the snake is facing
+	int lastInput = 'd';
 };
 
 /**

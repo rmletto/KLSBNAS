@@ -12,11 +12,10 @@
  *
  * @params	startingX - Starting x position for the Snake (default 1)
  *			startingY - Starting y position for the Snake (default 1)
- *			startingDir - Starting direction for the Snake (default Right)
  *			gameWin - The window that the Snake game is taking place in (default stdscr)
  */
-Snake::Snake(int startingX, int startingY, Direction startingDir, WINDOW* gameWin)
-: snakeXpos(startingX), snakeYpos(startingY), dir(startingDir), snakeWin(gameWin)
+Snake::Snake(int startingX, int startingY, WINDOW* gameWin)
+: snakeXpos(startingX), snakeYpos(startingY), snakeWin(gameWin)
 {}
 
 
@@ -37,6 +36,7 @@ void Snake::move(int moveInput)
 	{
 		///UP CONDITION
 		case 'w' :
+			lastInput = moveInput;
 			snakeYpos--;	//Decrement the Snake Y position, which moves it up
 			wmove(snakeWin, snakeYpos, snakeXpos);	//Update position on map
 			waddch(snakeWin, '^');	//Show Snake direction
@@ -44,6 +44,7 @@ void Snake::move(int moveInput)
 		
 		///RIGHT CONDITION
 		case 'd' :
+			lastInput = moveInput;
 			snakeXpos++;	//Increment the Snake X position
 			wmove(snakeWin, snakeYpos, snakeXpos);	//Update position on map
 			waddch(snakeWin, '>');	//Show Snake direction
@@ -51,6 +52,7 @@ void Snake::move(int moveInput)
 			
 		///DOWN CONDITION
 		case 's' :
+			lastInput = moveInput;
 			snakeYpos++;	//Increment the Snake Y position, which moves it down
 			wmove(snakeWin, snakeYpos, snakeXpos);	//Update position on map
 			waddch(snakeWin, 'v');	//Show Snake direction
@@ -58,12 +60,18 @@ void Snake::move(int moveInput)
 		
 		///LEFT CONDITION
 		case 'a' :
+			lastInput = moveInput;
 			snakeXpos--;	//Decrement the Snake X position
 			wmove(snakeWin, snakeYpos, snakeXpos);	//Update position on map
 			waddch(snakeWin, '<');	//Show Snake direction
 			break;
+		
+		//DEFAULT CASE: MOVE WITH RESPECT TO LAST INPUTTED DIRECTION
+		default:
+			move(lastInput);
+			return;
 	}
-	
+
 	wmove(snakeWin, snakeYpos, snakeXpos);	//Update Snake position after printing direction
 	wrefresh(snakeWin);						//Refresh the window to show changes
 }
@@ -98,8 +106,9 @@ void Snake::updatePos()
 void init()
 {
     initscr();              //Initialize curses
-    cbreak();               //Disable character buffering
+    cbreak();               //getch() will not buffer characters and wait for a newline
     keypad(stdscr, true);   //Allow the program to capture special keystrokes such as arrow keys
+	//nodelay(stdscr, true);	//getch() will not wait for a character to be hit
     noecho();				//Prevents characters from printing to the terminal
 
     /*

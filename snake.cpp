@@ -71,6 +71,7 @@ void Snake::move(int moveInput)
 			move(lastInput);
 			return;
 	}
+	//If the x position or y position exceeds the bounds of the map, do nothing
 
 	wmove(snakeWin, snakeYpos, snakeXpos);	//Update Snake position after printing direction
 	wrefresh(snakeWin);						//Refresh the window to show changes
@@ -114,7 +115,7 @@ void init()
     /*
      * Printing the welcome message
      */
-    std::ifstream welcomeFile("welcome.txt",std::ifstream::in); //Opens the welcome message as a filestream object
+    std::ifstream welcomeFile("maps/welcome.txt",std::ifstream::in); //Opens the welcome message as a filestream object
     std::string welcomeMessage = slurp(welcomeFile);            //Save the file contents to a string
     welcomeFile.close();                //Close the welcome file
     printw(welcomeMessage.c_str());     //Print the welcome message to the console

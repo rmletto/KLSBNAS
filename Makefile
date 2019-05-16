@@ -1,5 +1,5 @@
-CXX=g++
-CXXFLAGS=-lncurses -Wall
+CXX=clang++
+CXXFLAGS= -std=c++11 -lncurses -Wall
 
 KLSBNAS: main.cpp utils.cpp snake.cpp
 	${CXX} ${CXXFLAGS} -o $@ $^

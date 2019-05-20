@@ -1,7 +1,7 @@
 //
 // Created by Ryan Letto on 2019-01-17.
 //
-#include "snake.h"
+#include "Snake.h"
 #include "utils.h"
 #include <curses.h>
 #include <string>
@@ -70,14 +70,15 @@ void Snake::move(int moveInput)
 
 
 
-/**
- * Method to update the Snake's position on the map
+/** Update the Snake's position on the map
  *
- * DOES NOT UPDATE SCREEN AUTOMATICALLY
+ * After determining where the Snake has to move by fixing up it's coordinates,
+ * this method gets called. This method handles all of the ncurses shenanigans
+ * required to get the Snake to show up properly on the map.
  *
- * @params none
+ * @param input: A valid user input received from getch()
+ * @param direction: The 'arrow' that indicates which direction the Snake is facing
  *
- * @returns none
  */
 void Snake::updatePos(int input, char direction)
 {
@@ -91,6 +92,7 @@ void Snake::updatePos(int input, char direction)
 	waddch(snakeWin, direction);
 	//Set the cursor back on top of the Snake's head
 	wmove(snakeWin, snakeYpos, snakeXpos);
+	//Update curses so that the changes can be seen on screen
 	wrefresh(snakeWin);
 }
 
@@ -108,7 +110,7 @@ void init()
     initscr();              //Initialize curses
     cbreak();               //getch() will not buffer characters and wait for a newline
     keypad(stdscr, true);   //Allow the program to capture special keystrokes such as arrow keys
-	//nodelay(stdscr, true);	//getch() will not wait for a character to be hit
+	nodelay(stdscr, true);	//getch() will not wait for a character to be hit
     noecho();				//Prevents characters from printing to the terminal
 
     /*
